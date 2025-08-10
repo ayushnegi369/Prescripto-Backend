@@ -9,7 +9,18 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 // Middleware
-app.use(cors());
+app.use(cors({
+    origin: [
+        'http://localhost:5173', // Vite dev server
+        'http://localhost:3000', // Local frontend
+        'https://prescripto-frontend-weld.vercel.app', // Vercel frontend
+        'https://prescripto-frontend-weld.vercel.app/', // Vercel frontend with trailing slash
+        'https://prescripto-backend-enxy.onrender.com' // Render backend (for testing)
+    ],
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
+}));
 app.use(bodyParser.json());
 
 // MongoDB Connection
